@@ -13,7 +13,7 @@ Finally the descriptive parameters extracted by MAIA allows to classify whether 
 The software architecture is composed of 4 modules:
 
 <p align="center">
-  <img src='Media/architecture.png' width="800" height="" >  
+  <img src='Media/Architecture.png' width="800" height="" >  
 </p>
 
 Each module can be freely modified according to the user's requirements.
