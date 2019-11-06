@@ -1,7 +1,7 @@
 # <center>MAIA - Markerless Automatic Infant motion Analysis</center>
 
 <p align="center">
-  <img src='Maia.png' width="400" height="" >  
+  <img src='Media/Maia.png' width="400" height="" >  
 </p>
 
 According to Heinz Prechtl's Theory the spontaneous movements of infants reflect the neurological development, it is therefore possible to recognize abnormal motion pattern as pathological.
@@ -13,7 +13,7 @@ Finally the descriptive parameters extracted by MAIA allows to classify whether 
 The software architecture is composed of 4 modules:
 
 <p align="center">
-  <img src='architecture.png' width="800" height="" >  
+  <img src='Media/architecture.png' width="800" height="" >  
 </p>
 
 Each module can be freely modified according to the user's requirements.
