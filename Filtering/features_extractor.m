@@ -105,7 +105,8 @@ function [features] = features_extractor(pos)
         %percentage(:,k) = abs((difference(:,k)*100)./M(:,k)); %calcolo percentuale
     end
     %Area = sum(percentage); 
-    Area = sum(difference); 
+    Area = sum(difference);
+    Area = Area/h;
     Area = [ (Area(1) + Area(2)) (Area(3)+ Area(4)) (Area(5) + Area(6)) (Area(7) + Area(8)) (Area(9) + Area(10)) ];
 
     % Change the plot value on the top of the code to plot the results
@@ -129,13 +130,15 @@ function [features] = features_extractor(pos)
     for k=1:l
         for i=1:h
             if(difference(i,k) > S(k))
-                Area2(i,k) = abs(((difference(i,k)-S(k))*100)./S(k));
-                %Area2(i,k) = abs(difference(i,k));
+                %Area2(i,k) = abs(((difference(i,k)-S(k))*100)./S(k));
+                Area2(i,k) = abs(difference(i,k));
             end
         end
     end
     Area2 = sum(Area2);
+    Area2 = Area2/h;
     Area2 = [ (Area2(1) + Area2(2)) (Area2(3)+ Area2(4)) (Area2(5) + Area2(6)) (Area2(7) + Area2(8)) (Area2(9) + Area2(10)) ];
+    
     %Plot
     %{
     plot(Area2(:,3)) %2857
@@ -172,4 +175,9 @@ function [features] = features_extractor(pos)
     % The final vector of features is composed as follows:
     % [Xcorrelation(Hands)(x3) Xcorrelation(Feet)(x3) Skewness(X5) Area(X5) Area2(X5) Periodicity(X5) MeanVel(x5) MeanAcc(x5) MeanJerk(x5) ]
     features = [HandsCorrelation FeetCorrelation skew Area Area2 Periodicity ]; %Mean_Vel Mean_Acc Mean_Jerk];
+    
+    %% MERGE THE FEATURES
+    features = [features(:,1:7) features(:,8)+features(:,9) features(:,10)+features(:,11) features(:,12) features(:,13)+features(:,14) features(:,15)+features(:,16) features(:,17) features(:,18)+features(:,19) features(:,20)+features(:,21) ...
+    features(:,22) features(:,23)+features(:,24) features(:,25)+features(:,26)];
+
 end
