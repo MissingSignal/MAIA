@@ -11,7 +11,7 @@ end
 Acc = diff(Vel);
 
 %% FILTERING
-% Elimino le posizioni con Velocità maggiore di 20 (False detection)
+% Elimino le posizioni con Velocità maggiore di 20 
     
 for k=1:l
     % Jump detection
