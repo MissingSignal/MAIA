@@ -1,7 +1,7 @@
 function [features] = features_extractor(pos)
     %% FUNCTION SETTINGS
     % Do you want to plot the results?
-    PLOT = true;
+    PLOT = false;
 
     %% MEMORY ALLOCATION (VARIABLES DECLARATION) 
 
@@ -104,13 +104,20 @@ function [features] = features_extractor(pos)
     for k=1:l %per ciascuna coordinata (colonna)
         M(:,k) = movmean(pos(:,k),99); %moving average on a window of 99 frames
         S(k) = std(pos(:,k)); %standard deviation on the entire video
-        difference(:,k) = abs(M(:,k)-pos(:,k)); %differenza media mobile - posizione attuale
-        %percentage(:,k) = abs((difference(:,k)*100)./M(:,k)); %calcolo percentuale
+        
+        for i=1:h-1 
+            if (Vel(i,k)>10)
+                difference(i,k) = abs(M(i,k)-pos(i,k)); %differenza media mobile - posizione attuale
+            else 
+                difference(i,k) = 0;
+            end
+        end
     end
     
-    %Area = sum(percentage); 
+    Qmotion = sum(logical(difference),'all'); %number of frames with vel>10
+     
     Area = sum(difference);
-    Area = Area/h;
+    Area = Area/Qmotion;
     Area = [ (Area(1) + Area(2)) (Area(3) + Area(4)) (Area(5) + Area(6)) (Area(7) + Area(8)) (Area(9) + Area(10)) ];
 
     % Change the plot value on the top of the code to plot the results
@@ -137,12 +144,11 @@ function [features] = features_extractor(pos)
         end
     end
 
-    %% Area out of standard deviation of moving average [PENSO OK]
+    %% Area out of standard deviation of moving average
 
     for k=1:l
         for i=1:h
             if(difference(i,k) > S(k))
-                %Area2(i,k) = abs(((difference(i,k)-S(k))*100)./S(k));
                 Area2(i,k) = abs(difference(i,k));
             end
         end

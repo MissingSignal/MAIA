@@ -16,15 +16,15 @@ function [Table]= load_dataset(checkdata,NEGclass,POSclass)
     Table = array2table(Dataset);
     
     % Labels
-    Labels(1:size(NEG,1),1) = {'NEG'};
-    Labels(size(NEG,1)+1:size(NEG,1)+size(POS,1),1) = {'POS'};
+    Labels(1:size(NEG,1),1) = {'AT'}; %NEG
+    Labels(size(NEG,1)+1:size(NEG,1)+size(POS,1),1) = {'PT'}; %POS
     
-    
-    Table(:,size(Dataset,2)+1) = Labels;
-    
+    %Append the labels to the matrix containing the parameters
+    Table = addvars(Table,Labels);
+     
     % Naming the variables 
     varNames = {'VelHandsCorrelation','AccHandsCorrelation','JerkHandsCorrelation','VelFeetCorrelation','AccFeetCorrelation','JerkFeetCorrelation'...
-    'skew1','skew_hands','skew_feet','Area_Nose','Area_Hands','Area_Feet','Area0_Nose','Area0_Hands','Area0_Feet', ...
+    'skew_Nose','skew_hands','skew_feet','Area_Nose','Area_Hands','Area_Feet','AreaStd_Nose','AreaStd_Hands','AreaStd_Feet', ...
     'Periodicity_Nose','Periodicity_Hands','Periodicity_Feet','Labels'};
     Table.Properties.VariableNames = varNames ;
   

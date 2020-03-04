@@ -53,7 +53,7 @@ classificationSVM = fitcsvm(...
     'KernelScale', KernelScale, ...
     'BoxConstraint', 1, ...
     'Standardize', true, ...
-    'ClassNames', categorical({'NEG'; 'POS'}));
+    'ClassNames', categorical({'AT'; 'PT'})); %{'NEG'; 'POS'}
 
 % Add additional fields to the result struct
 trainedClassifier.RequiredVariables = trainingData{:,end}%.Properties.VariableNames; %%%%CAMBIATO
@@ -78,15 +78,13 @@ end
 
 figure(1)
 cm = confusionchart(categorical(response),validationPredictions,'Normalization','row-normalized');
-cm.Title = 'Pathology classification confusion matrix';
 
 %ROC
 mdlSVM = fitPosterior(classificationSVM);
 [~,score_svm] = resubPredict(mdlSVM);
 
-[X,Y,T,AUC] = perfcurve(response,validationScores(:,2),'POS'); %'TVals',[-100:0.5:100]
+[X,Y,T,AUC] = perfcurve(response,validationScores(:,2),'POS'); 
 
-%save('PT3.mat','X','Y','AUC')
 %[X,Y,T,AUC] = perfcurve(response,score_svm,'POS');
 AUC
 
