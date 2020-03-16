@@ -1,14 +1,10 @@
-function [Table]= load_dataset(checkdata,NEGclass,POSclass)
+function [Table]= load_dataset(NEGclass,POSclass)
     %% Load Data
     
     NEG = readmatrix(NEGclass);
 
     POS = readmatrix(POSclass);
     
-    if (checkdata)
-        [NEG] = find_outliers(NEG);
-        [POS] = find_outliers(POS);
-    end
     Dataset = [NEG ; POS];
     
     %% Table creation  
@@ -16,8 +12,8 @@ function [Table]= load_dataset(checkdata,NEGclass,POSclass)
     Table = array2table(Dataset);
     
     % Labels
-    Labels(1:size(NEG,1),1) = {'AT'}; %NEG
-    Labels(size(NEG,1)+1:size(NEG,1)+size(POS,1),1) = {'PT'}; %POS
+    Labels(1:size(NEG,1),1) = {'NEG'}; %NEG
+    Labels(size(NEG,1)+1:size(NEG,1)+size(POS,1),1) = {'POS'}; %POS
     
     %Append the labels to the matrix containing the parameters
     Table = addvars(Table,Labels);
